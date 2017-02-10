@@ -1,0 +1,41 @@
+{
+  "name": "ts-serializer",
+  "version": "0.1.0",
+  "description": "Object serialization made easy with decorators.",
+  "main": "index.js",
+  "scripts": {
+    "clean": "del build coverage",
+    "pretest": "echo 'stuff'",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "predevelop": "npm run clean",
+    "develop": "tsc --sourceMap",
+    "prebuild": "npm run clean",
+    "build": "tsc --outDir ."
+  },
+  "keywords": [
+    "typescript",
+    "serialization",
+    "deserialization",
+    "decorators",
+    "json"
+  ],
+  "author": "Christoph Bühler <christoph.buehler@bluewin.ch>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/chai": "^3.4.34",
+    "@types/mocha": "^2.2.39",
+    "@types/reflect-metadata": "0.0.5",
+    "chai": "^3.5.0",
+    "del-cli": "^0.2.1",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.2.0",
+    "mocha-lcov-reporter": "^1.2.0",
+    "remap-istanbul": "^0.9.1",
+    "tslint": "^4.4.2",
+    "tslint-jsdoc-rules": "^0.1.2",
+    "typescript": "^2.1.6"
+  },
+  "dependencies": {
+    "tslib": "^1.5.0"
+  }
+}
