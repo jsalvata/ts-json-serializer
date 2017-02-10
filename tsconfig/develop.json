@@ -1,0 +1,13 @@
+{
+    "extends": "./base.json",
+    "compilerOptions": {
+        "outDir": "../build",
+        "declaration": false,
+        "sourceMap": true,
+        "watch": true
+    },
+    "exclude": [
+        "../node_modules",
+        "../build"
+    ]
+}

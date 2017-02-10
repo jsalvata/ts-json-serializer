@@ -3,14 +3,16 @@
   "version": "0.1.0",
   "description": "Object serialization made easy with decorators.",
   "main": "index.js",
+  "typings": "index.d.ts",
   "scripts": {
     "clean": "del build coverage",
-    "pretest": "echo 'stuff'",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "pretest": "npm run clean && tsc -p ./tsconfig/test.json",
+    "test": "istanbul cover -x \"**/*.spec.*\" _mocha --report lcovonly -- --ui bdd \"./build/test/**/*.spec.js\"",
+    "posttest": "remap-istanbul -i coverage/coverage.json -o coverage/lcov-mapped.info -t lcovonly",
     "predevelop": "npm run clean",
-    "develop": "tsc --sourceMap",
+    "develop": "tsc -p ./tsconfig/develop.json",
     "prebuild": "npm run clean",
-    "build": "tsc --outDir ."
+    "build": "tsc -p ./tsconfig/build.json"
   },
   "keywords": [
     "typescript",
@@ -21,9 +23,17 @@
   ],
   "author": "Christoph Bühler <christoph.buehler@bluewin.ch>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/buehler/ts-serializer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/buehler/ts-serializer/issues"
+  },
   "devDependencies": {
     "@types/chai": "^3.4.34",
     "@types/mocha": "^2.2.39",
+    "@types/node": "^7.0.5",
     "@types/reflect-metadata": "0.0.5",
     "chai": "^3.5.0",
     "del-cli": "^0.2.1",
@@ -36,6 +46,7 @@
     "typescript": "^2.1.6"
   },
   "dependencies": {
+    "reflect-metadata": "^0.1.9",
     "tslib": "^1.5.0"
   }
 }

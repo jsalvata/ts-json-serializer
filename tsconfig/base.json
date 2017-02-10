@@ -4,9 +4,6 @@
         "module": "commonjs",
         "moduleResolution": "node",
         "removeComments": false,
-        "outDir": "./build",
-        "declaration": true,
-        "sourceMap": false,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "importHelpers": true,
@@ -17,8 +14,7 @@
             "es2015"
         ]
     },
-    "exclude": [
-        "node_modules",
-        "build"
+    "include": [
+        "../**/*"
     ]
 }
