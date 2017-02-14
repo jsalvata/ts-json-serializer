@@ -1,6 +1,5 @@
 import { SerializableType } from './SerializableType';
 import { Resolver } from './Resolver';
-import { TransportObject } from './TransportObject';
 import { NoFactoryProvidedError, NoNameProvided } from './errors';
 
 /**

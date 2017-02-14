@@ -25,7 +25,7 @@ console.log(`Update npm-shrinkwrap.json to version v${versionNumber}`);
 let shrinkWrap = fs.readFileSync('./npm-shrinkwrap.json', 'utf-8');
 shrinkWrap = shrinkWrap.replace(/"version": .*,/, `"version": "${versionNumber}",`);
 
-fs.writeFileSync('./package.json', shrinkWrap, { encoding: 'utf-8' });
+fs.writeFileSync('./npm-shrinkwrap.json', shrinkWrap, { encoding: 'utf-8' });
 
 console.log(`Update changelog`);
 

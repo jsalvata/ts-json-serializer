@@ -6,11 +6,9 @@ node_js:
 before_install:
 - export TZ=Europe/Zurich
 
-script: npm test
-
-after_script: npm install coveralls@^2.11.9 && cat ./coverage/lcov-mapped.info | coveralls
-
-before_deploy:
+script:
+- npm test
+- npm install coveralls@^2.11.9 && cat ./coverage/lcov-mapped.info | coveralls
 - npm run build
 
 deploy:
