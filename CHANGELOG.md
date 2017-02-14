@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [1.1.0]
 #### Added
 - Possibility to serialize arrays of objects in types.
 
@@ -22,7 +24,8 @@ Library that does serialization and deserialization for JSON communication. It d
 to support browsers as well in the future. The main reason is to use decorators to register the serializable models
 and create a reliable json structure with those informations. Further information is found in the readme.
 
-[Unreleased]: https://github.com/buehler/ts-json-serializer/compare/v1.0.1...master
+[Unreleased]: https://github.com/buehler/ts-json-serializer/compare/v1.1.0...master
+[1.1.0]: https://github.com/buehler/ts-json-serializer/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/buehler/ts-json-serializer/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/buehler/ts-json-serializer/compare/v0.9.0...v1.0.0
 [0.9.0]: https://github.com/buehler/ts-json-serializer/tree/v0.9.0
