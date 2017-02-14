@@ -17,7 +17,7 @@ deploy:
     secure: MC4hvqn8I8jka1VFaQGZCSl+qofZyycehLauwSxpMpoJWC45DbGfAo/AcI8WrPcG0dqpdd9lTJ6wep92fWRAPerBrJ48W8uHps97kfgc/NTRfQGv0eGq8gmDadMI7iA3r5gHkuqyW0R91/tpY/zEc9YwoC669u4oCUhV5fpW/KU6j2J4jskTH00ZBiGkkAjjKPyfJJbmsEWO8kHbL2Idn1pberdjkAYtvK+VmzN/JvGf3c4B+bQ4ixFrVXGOubbf/ri5H5YzfQqOjA7Ifkls2KFkW8KRFmq7/9ou69iEwiFnI+ZkjWn8OOrC2g9wFcdHHjeA6NPDdix5njPc2jolmk1Wd3s6QLA479eTMui5d3WYyM3zDnyGCJRWLYGzfYZiUu6dlh2okzx6Xd/bk+G4UxIjaFs4Y70jaUrwjPPhuB4/+9oFbkuApeVBQf6FWhGws6p4BFTgEHxGVIn0x3xGI7+SbOl0DDnVJzynOhRI168/Q+nsOuY21Qiz59t7YSbUbLCNq+Krxmh9FDtqxL1B0ztXIZuCKJ49VT+2Oh5KkYhICmL3EapIyOPD+nBl7/eyAoxlhUgsAM+UpgbvQ1kkmf5CqieB7K53MADfZz+FQ1Pmbz0zny8whtk3iIFec0a4mXtuQsAlCA4sk4yDjNUjl1uX87KdGXEVOgmm5I9tXB8=
   on:
     tags: true
-    repo: buehler/ts-serializer
+    repo: buehler/ts-json-serializer
 
 notifications:
   email: false

@@ -1,5 +1,5 @@
 {
-  "name": "ts-serializer",
+  "name": "ts-json-serializer",
   "version": "0.1.0",
   "dependencies": {
     "@types/chai": {

@@ -24,8 +24,8 @@ console.log(`Update changelog`);
 
 let changelog = fs.readFileSync('./CHANGELOG.md', 'utf-8');
 changelog = changelog.replace(/## \[Unreleased\]/, `## [Unreleased]\n\n## [${versionNumber}]`);
-changelog = changelog.replace(/\[Unreleased\]\:.*v(.*)\.\.\.master/, `[Unreleased]: https://github.com/buehler/ts-serializer/compare/v${versionNumber}...master
-[${versionNumber}]: https://github.com/buehler/ts-serializer/compare/v$1...v${versionNumber}`);
+changelog = changelog.replace(/\[Unreleased\]\:.*v(.*)\.\.\.master/, `[Unreleased]: https://github.com/buehler/ts-json-serializer/compare/v${versionNumber}...master
+[${versionNumber}]: https://github.com/buehler/ts-json-serializer/compare/v$1...v${versionNumber}`);
 
 fs.writeFileSync('./CHANGELOG.md', changelog, { encoding: 'utf-8' });
 
