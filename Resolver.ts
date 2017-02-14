@@ -2,7 +2,7 @@ import { DuplicateTypeRegistration } from './errors';
 import { SerializableType } from './SerializableType';
 
 /**
- * TODO
+ * Resolving instance. Holds the registered types and is the central type "database" for the system.
  * 
  * @export
  * @class Resolver
@@ -10,6 +10,14 @@ import { SerializableType } from './SerializableType';
 export class Resolver {
     private static _instance: Resolver;
 
+    /**
+     * Actual instance (singleton).
+     * 
+     * @readonly
+     * @static
+     * @type {Resolver}
+     * @memberOf Resolver
+     */
     public static get instance(): Resolver {
         if (!Resolver._instance) {
             Resolver._instance = new Resolver();
@@ -17,12 +25,20 @@ export class Resolver {
         return Resolver._instance;
     }
 
+    /**
+     * Hashmap of registered types.
+     * 
+     * @private
+     * @type {{ [name: string]: SerializableType }}
+     * @memberOf Resolver
+     */
     private types: { [name: string]: SerializableType } = {};
 
     private constructor() { }
 
     /**
-     * TODO
+     * Resets the registered types.
+     * May be useful for unit testing.
      * 
      * @memberOf Resolver
      */
@@ -31,7 +47,7 @@ export class Resolver {
     }
 
     /**
-     * TODO
+     * Add a type to the resolver. Throws if the type is already registered.
      * 
      * @param {SerializableType} model
      * 
@@ -46,7 +62,7 @@ export class Resolver {
     }
 
     /**
-     * TODO
+     * Searches and returns a type by name.
      * 
      * @param {string} name
      * @returns {(SerializableType | undefined)}
@@ -58,7 +74,7 @@ export class Resolver {
     }
 
     /**
-     * 
+     * Searches and returns a type by a given object (does compare the contructors).
      * 
      * @param {*} obj
      * @returns {(SerializableType | undefined)}

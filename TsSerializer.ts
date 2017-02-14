@@ -2,17 +2,34 @@ import { ReferenceObjectNotFoundError, TypeNotRegisteredError } from './errors';
 import { Resolver } from './Resolver';
 import { TransportObject } from './TransportObject';
 
-type RerializationReferences = {
+/**
+ * Hash that holds the references to the serialized or deserialized objects. Used to resolve references.
+ */
+type SerializationReferences = {
     [type: string]: any[];
 };
 
 /**
- * 
+ * Referenced object during deserialization. Since the whole type tree needs to be built before the references
+ * can be resolved, this intermediate object does serve this purpose.
  * 
  * @class ReferencedObject
  */
 class ReferencedObject {
+    /**
+     * The typename of the reference.
+     * 
+     * @type {string}
+     * @memberOf ReferencedObject
+     */
     public type: string;
+
+    /**
+     * Then index of the referenced object in the type instance array.
+     * 
+     * @type {number}
+     * @memberOf ReferencedObject
+     */
     public index: number;
 
     constructor(referenceInfo: { type: string, index: number }) {
@@ -22,16 +39,18 @@ class ReferencedObject {
 }
 
 /**
- * TODO
+ * Main element of this library. Is responsible for the serialization and deserialization of the object structure.
+ * Throw it a list (or single) of objects which types are registered and it creates a json string out of it.
+ * On the other side, deserialize the whole stream back into instantiated objects.
  * 
  * @export
  * @class TsSerializer
  */
 export class TsSerializer {
-    private references: RerializationReferences;
+    private references: SerializationReferences;
 
     /**
-     * TODO
+     * Instance of the type resolver.
      * 
      * @readonly
      * @type {Resolver}
@@ -42,9 +61,10 @@ export class TsSerializer {
     }
 
     /**
+     * Serializes a registered object or an array of objects. Creates a special formatted string that can be
+     * transmitted and deserialized on the other side.
      * 
-     * 
-     * @param {*} objectOrArray
+     * @param {*} objectOrArray The object or array of objects that needs to be serialized.
      * @returns {string}
      * 
      * @memberOf TsSerializer
@@ -57,15 +77,15 @@ export class TsSerializer {
         } else {
             serialized = this.serializeObject(objectOrArray);
         }
-        // this.resolveObjectReferences(serialized);
         return JSON.stringify(serialized);
     }
 
     /**
-     * 
+     * Deserializes a string that was serialized by {@link TsSerializer#serialize()}. Does parse the whole
+     * string into instantiated objects.
      * 
      * @template T
-     * @param {string} json
+     * @param {string} json Serialized json string.
      * @returns {T}
      * 
      * @memberOf TsSerializer
@@ -84,6 +104,14 @@ export class TsSerializer {
     }
 
     /**
+     * Recursive function that serializes the objects. Returns a structure of the value and the type reference.
+     * References to already existing objects (like circular references) are also resolved.
+     * 
+     * @private
+     * @param {*} obj
+     * @returns {TransportObject}
+     * 
+     * @memberOf TsSerializer
      */
     private serializeObject(obj: any): TransportObject {
         if (obj.constructor === Date) {
@@ -132,7 +160,8 @@ export class TsSerializer {
     }
 
     /**
-     * 
+     * Recursive deserialize function that resolves the type names to their instantiated types.
+     * References are resolved at last, since the whole object tree needs to be built first.
      * 
      * @private
      * @param {TransportObject} obj
@@ -178,7 +207,8 @@ export class TsSerializer {
     }
 
     /**
-     * 
+     * Resolves the referenced objects to actual instances as soon as the whole object tree is built. Is only needed
+     * during deserialization.
      * 
      * @private
      * @param {*} obj

@@ -21,6 +21,8 @@ test
 tslint.json
 tsconfig
 
+prepare-release.js
+
 *.ts
 !*.d.ts
 *.js.map

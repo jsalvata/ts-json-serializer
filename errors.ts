@@ -1,5 +1,6 @@
 /**
- * TODO
+ * Error that is thrown when a class has a constructor with parameters. So you need to provide a factory
+ * method to actually instantiate the class and call the constructor by yourself.
  * 
  * @export
  * @class NoFactoryProvidedError
@@ -13,7 +14,7 @@ export class NoFactoryProvidedError {
 }
 
 /**
- * TODO
+ * Error hat is thrown when a type is duplicated. Either use the naming system or call it by another name ;-)
  * 
  * @export
  * @class DuplicateTypeRegistration
@@ -27,7 +28,8 @@ export class DuplicateTypeRegistration {
 }
 
 /**
- * TODO
+ * Error hat is thrown when function.name is not callable (when using in the browser or so). So you need to
+ * provide a name for the resolver system.
  * 
  * @export
  * @class NoNameProvided
@@ -42,7 +44,8 @@ export class NoNameProvided {
 }
 
 /**
- * TODO
+ * Error hat is thrown when a type that is beeing serialized or deserialized is not found in the resolver system.
+ * A possible cause could be that you forgot @Serializabe() on the type.
  * 
  * @export
  * @class TypeNotRegisteredError
@@ -57,7 +60,7 @@ export class TypeNotRegisteredError {
 }
 
 /**
- * 
+ * Error hat is thrown when a referenced object is not found.
  * 
  * @export
  * @class ReferenceObjectNotFoundError

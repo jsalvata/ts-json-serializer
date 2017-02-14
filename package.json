@@ -1,6 +1,6 @@
 {
-  "name": "ts-serializer",
-  "version": "0.1.0",
+  "name": "ts-json-serializer",
+  "version": "1.0.0",
   "description": "Object serialization made easy with decorators.",
   "main": "index.js",
   "typings": "index.d.ts",
@@ -25,10 +25,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/buehler/ts-serializer.git"
+    "url": "git+ssh://git@github.com/buehler/ts-json-serializer.git"
   },
   "bugs": {
-    "url": "https://github.com/buehler/ts-serializer/issues"
+    "url": "https://github.com/buehler/ts-json-serializer/issues"
   },
   "devDependencies": {
     "@types/chai": "^3.4.34",
