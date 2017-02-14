@@ -319,6 +319,31 @@ describe('TsSerializer', () => {
             );
         });
 
+        it('should serialize an array of models in a model', () => {
+            @Serializable()
+            class Model {
+                public primitive: any[] = ['string', true, 1337];
+                public mixed: any[] = ['string', new ArrayModel('arr_1'), 1337, new ArrayModel('arr_2')];
+                public single: ArrayModel[] = [new ArrayModel('arr_3'), new ArrayModel('arr_4')];
+            }
+
+            @Serializable({ factory: json => new ArrayModel(json.name) })
+            class ArrayModel {
+                constructor(public name: string) { }
+            }
+
+            serializer.serialize(new Model()).should.equal(
+                '{"__type":"Model","__value":{"primitive":{"__type":"Array","__value":[{"__type":"String",' +
+                '"__value":"string"},{"__type":"Boolean","__value":true},{"__type":"Number","__value":1337}]},' +
+                '"mixed":{"__type":"Array","__value":[{"__type":"String","__value":"string"},{"__type":"ArrayModel"' +
+                ',"__value":{"name":{"__type":"String","__value":"arr_1"}}},{"__type":"Number","__value":1337},' +
+                '{"__type":"ArrayModel","__value":{"name":{"__type":"String","__value":"arr_2"}}}]},"single":' +
+                '{"__type":"Array","__value":[{"__type":"ArrayModel","__value":{"name":{"__type":"String",' +
+                '"__value":"arr_3"}}},{"__type":"ArrayModel","__value":{"name":{"__type":"String",' +
+                '"__value":"arr_4"}}}]}}}'
+            );
+        });
+
         it('should throw when a model is not registered', () => {
             class Model {
                 public name: string;
@@ -692,6 +717,51 @@ describe('TsSerializer', () => {
             deserialized.name.should.equal('model');
             deserialized.sub.should.be.an.instanceof(SubModel);
             deserialized.sub.name.should.equal('sub model');
+        });
+
+        it('should deserialize an array of models in a model', () => {
+            @Serializable()
+            class Model {
+                public primitive: any[];
+                public mixed: any[];
+                public single: ArrayModel[];
+            }
+
+            @Serializable({ factory: json => new ArrayModel(json.name) })
+            class ArrayModel {
+                constructor(public name: string) { }
+            }
+
+            const deserialized = serializer.deserialize<Model>(
+                '{"__type":"Model","__value":{"primitive":{"__type":"Array","__value":[{"__type":"String",' +
+                '"__value":"string"},{"__type":"Boolean","__value":true},{"__type":"Number","__value":1337}]},' +
+                '"mixed":{"__type":"Array","__value":[{"__type":"String","__value":"string"},{"__type":"ArrayModel"' +
+                ',"__value":{"name":{"__type":"String","__value":"arr_1"}}},{"__type":"Number","__value":1337},' +
+                '{"__type":"ArrayModel","__value":{"name":{"__type":"String","__value":"arr_2"}}}]},"single":' +
+                '{"__type":"Array","__value":[{"__type":"ArrayModel","__value":{"name":{"__type":"String",' +
+                '"__value":"arr_3"}}},{"__type":"ArrayModel","__value":{"name":{"__type":"String",' +
+                '"__value":"arr_4"}}}]}}}'
+            );
+
+            deserialized.primitive.should.be.an('array').with.lengthOf(3);
+            deserialized.mixed.should.be.an('array').with.lengthOf(4);
+            deserialized.single.should.be.an('array').with.lengthOf(2);
+
+            should.equal(deserialized.primitive[0], 'string');
+            should.equal(deserialized.primitive[1], true);
+            should.equal(deserialized.primitive[2], 1337);
+
+            deserialized.mixed[0].should.equal('string');
+            deserialized.mixed[1].should.be.an.instanceof(ArrayModel);
+            deserialized.mixed[1].name.should.equal('arr_1');
+            deserialized.mixed[2].should.equal(1337);
+            deserialized.mixed[3].should.be.an.instanceof(ArrayModel);
+            deserialized.mixed[3].name.should.equal('arr_2');
+
+            deserialized.single[0].should.be.an.instanceof(ArrayModel);
+            deserialized.single[0].name.should.equal('arr_3');
+            deserialized.single[1].should.be.an.instanceof(ArrayModel);
+            deserialized.single[1].name.should.equal('arr_4');
         });
 
         it('should throw when a model is not registered', () => {

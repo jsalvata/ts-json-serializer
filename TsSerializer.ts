@@ -119,6 +119,11 @@ export class TsSerializer {
                 __type: 'Date',
                 __value: obj
             };
+        } else if (obj.constructor === Array) { 
+            return {
+                __type: 'Array',
+                __value: obj.map(o => this.serializeObject(o))
+            };
         } else if (typeof obj === 'object') {
             const type = this.resolver.getTypeByObject(obj),
                 transformedObj: any = {};
@@ -179,6 +184,8 @@ export class TsSerializer {
                 return String(obj.__value);
             case 'Boolean':
                 return Boolean(obj.__value);
+            case 'Array':
+                return obj.__value.map(o => this.deserializeObject(o));
             case 'ref':
                 return new ReferencedObject(obj.__value);
             default:

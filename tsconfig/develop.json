@@ -4,6 +4,8 @@
         "outDir": "../build",
         "declaration": false,
         "sourceMap": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
         "watch": true
     },
     "exclude": [
