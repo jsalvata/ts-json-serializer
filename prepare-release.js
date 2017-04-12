@@ -20,13 +20,6 @@ packageJson = packageJson.replace(/"version": .*,/, `"version": "${versionNumber
 
 fs.writeFileSync('./package.json', packageJson, { encoding: 'utf-8' });
 
-console.log(`Update npm-shrinkwrap.json to version v${versionNumber}`);
-
-let shrinkWrap = fs.readFileSync('./npm-shrinkwrap.json', 'utf-8');
-shrinkWrap = shrinkWrap.replace(/"version": .*,/, `"version": "${versionNumber}",`);
-
-fs.writeFileSync('./npm-shrinkwrap.json', shrinkWrap, { encoding: 'utf-8' });
-
 console.log(`Update changelog`);
 
 let changelog = fs.readFileSync('./CHANGELOG.md', 'utf-8');
@@ -39,7 +32,6 @@ fs.writeFileSync('./CHANGELOG.md', changelog, { encoding: 'utf-8' });
 console.log('Commit *.json');
 
 exec('git add package.json');
-exec('git add npm-shrinkwrap.json');
 exec(`git commit -m "Version bump to v${versionNumber}"`);
 
 console.log('Commit changelog');
