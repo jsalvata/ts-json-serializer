@@ -15,6 +15,10 @@
             "no-properties",
             "no-private-properties"
         ],
+        "max-line-length": [
+            true,
+            140
+        ],
         "member-access": [
             true,
             "check-accessor"

@@ -1,5 +1,5 @@
 {
-    "extends": "./base.json",
+    "extends": "./tsconfig/base.json",
     "compilerOptions": {
         "outDir": "../build",
         "declaration": false,
@@ -9,7 +9,7 @@
         "watch": true
     },
     "exclude": [
-        "../node_modules",
-        "../build"
+        "node_modules",
+        "ßbuild"
     ]
 }

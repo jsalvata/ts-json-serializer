@@ -72,3 +72,18 @@ export class ReferenceObjectNotFoundError {
         this.message = 'The reference object was not found in the previous deserialized objects';
     }
 }
+
+/**
+ * Error that is thrown when an input to deserialize or serialize is undefined.
+ * 
+ * @export
+ * @class UndefinedInputError
+ */
+export class UndefinedInputError {
+    public message: string;
+
+    constructor(functionname: string) {
+        this.message = `The input of your '${functionname}' call was undefined.
+ Undefined can't be serlialized or deserialized.`;
+    }
+}

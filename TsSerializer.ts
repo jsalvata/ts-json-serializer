@@ -1,4 +1,4 @@
-import { ReferenceObjectNotFoundError, TypeNotRegisteredError } from './errors';
+import { ReferenceObjectNotFoundError, TypeNotRegisteredError, UndefinedInputError } from './errors';
 import { Resolver } from './Resolver';
 import { TransportObject } from './TransportObject';
 
@@ -70,10 +70,13 @@ export class TsSerializer {
      * @memberOf TsSerializer
      */
     public serialize(objectOrArray: any): string {
+        if (objectOrArray === undefined) {
+            throw new UndefinedInputError('serialize');
+        }
         this.references = {};
         let serialized: any;
-        if (objectOrArray.constructor === Array) {
-            serialized = objectOrArray.map(o => this.serializeObject(o));
+        if (objectOrArray !== null && objectOrArray.constructor === Array) {
+            serialized = objectOrArray.filter(o => o !== undefined).map(o => this.serializeObject(o));
         } else {
             serialized = this.serializeObject(objectOrArray);
         }
@@ -91,10 +94,13 @@ export class TsSerializer {
      * @memberOf TsSerializer
      */
     public deserialize<T>(json: string): T {
+        if (json === undefined) {
+            throw new UndefinedInputError('deserialize');
+        }
         this.references = {};
         const parsed = JSON.parse(json);
         let deserialized: any;
-        if (parsed.constructor === Array) {
+        if (parsed !== null && parsed.constructor === Array) {
             deserialized = parsed.map(o => this.deserializeObject(o));
         } else {
             deserialized = this.deserializeObject(parsed);
@@ -114,12 +120,17 @@ export class TsSerializer {
      * @memberOf TsSerializer
      */
     private serializeObject(obj: any): TransportObject {
-        if (obj.constructor === Date) {
+        if (obj === null) {
+            return {
+                __type: 'null',
+                __value: null
+            };
+        } else if (obj.constructor === Date) {
             return {
                 __type: 'Date',
                 __value: obj
             };
-        } else if (obj.constructor === Array) { 
+        } else if (obj.constructor === Array) {
             return {
                 __type: 'Array',
                 __value: obj.map(o => this.serializeObject(o))
@@ -176,6 +187,8 @@ export class TsSerializer {
      */
     private deserializeObject(obj: TransportObject): any {
         switch (obj.__type) {
+            case 'null':
+                return null;
             case 'Date':
                 return new Date(obj.__value);
             case 'Number':
@@ -224,6 +237,9 @@ export class TsSerializer {
      * @memberOf TsSerializer
      */
     private resolveReferences(obj: any): void {
+        if (obj === null) {
+            return;
+        }
         for (let property of Object.keys(obj)) {
             const prop = obj[property];
             if (prop instanceof ReferencedObject) {

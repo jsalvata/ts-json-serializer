@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Serializable } from '../';
-import { TypeNotRegisteredError } from '../errors';
+import { TypeNotRegisteredError, UndefinedInputError } from '../errors';
 import { Resolver } from '../Resolver';
 import { TsSerializer } from '../TsSerializer';
 import chai = require('chai');
@@ -359,7 +359,7 @@ describe('TsSerializer', () => {
             @Serializable()
             class Model {
                 public name: string;
-                public mod: Submodel
+                public mod: Submodel;
             }
 
             class Submodel {
@@ -391,7 +391,7 @@ describe('TsSerializer', () => {
             @Serializable()
             class Model {
                 public name: string;
-                public mod: Submodel
+                public mod: Submodel;
             }
 
             class Submodel {
@@ -406,6 +406,45 @@ describe('TsSerializer', () => {
             const fn = () => serializer.serialize([obj]);
 
             fn.should.throw(TypeNotRegisteredError);
+        });
+
+        it('should serialize null as a value', () => {
+            const nullValue = null;
+            serializer.serialize(nullValue)!.should.equal('{"__type":"null","__value":null}');
+        });
+
+        it('should serialize null in an object', () => {
+            @Serializable()
+            class Model {
+                public name: string | null = null;
+            }
+
+            serializer.serialize(new Model()).should.equal('{"__type":"Model","__value":{"name":{"__type":"null","__value":null}}}');
+        });
+
+        it('should serialize null in an array', () => {
+            serializer.serialize(['string', null])
+                .should.equal('[{"__type":"String","__value":"string"},{"__type":"null","__value":null}]');
+        });
+
+        it('should throw on undefined input', () => {
+            const fn = () => serializer.serialize(undefined);
+
+            fn.should.throw(UndefinedInputError);
+        });
+
+        it('should filter undefined in an array', () => {
+            serializer.serialize(['1337', undefined, 1337])
+                .should.equal('[{"__type":"String","__value":"1337"},{"__type":"Number","__value":1337}]');
+        });
+
+        it('should filter undefined in an object', () => {
+            @Serializable()
+            class Model {
+                public name?: string;
+            }
+
+            serializer.serialize(new Model()).should.equal('{"__type":"Model","__value":{}}');
         });
 
     });
@@ -814,6 +853,35 @@ describe('TsSerializer', () => {
             };
 
             fn.should.throw(TypeNotRegisteredError);
+        });
+
+        it('should deserialize null as a value', () => {
+            should.equal(serializer.deserialize<any>('{"__type":"null","__value":null}'), null);
+        });
+
+        it('should deserialize null in an object', () => {
+            @Serializable()
+            class Model {
+                public name: string | null = null;
+            }
+
+            should.equal(
+                serializer.deserialize<Model>('{"__type":"Model","__value":{"name":{"__type":"null","__value":null}}}').name,
+                null
+            );
+        });
+
+        it('should deserialize null in an array', () => {
+            const array = serializer.deserialize<any[]>('[{"__type":"String","__value":"string"},{"__type":"null","__value":null}]');
+
+            array[0].should.equal('string');
+            should.equal(array[1], null);
+        });
+
+        it('should throw on undefined input', () => {
+            const fn = () => serializer.deserialize<any>(<any>undefined);
+
+            fn.should.throw(UndefinedInputError);
         });
 
     });

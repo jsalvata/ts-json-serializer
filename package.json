@@ -10,7 +10,7 @@
     "test": "istanbul cover -x \"**/*.spec.*\" _mocha --report lcovonly -- --ui bdd \"./build/test/**/*.spec.js\"",
     "posttest": "remap-istanbul -i coverage/coverage.json -o coverage/lcov-mapped.info -t lcovonly",
     "predevelop": "npm run clean",
-    "develop": "tsc -p ./tsconfig/develop.json",
+    "develop": "tsc -p .",
     "prebuild": "npm run clean",
     "build": "tsc -p ./tsconfig/build.json"
   },
