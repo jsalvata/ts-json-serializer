@@ -160,7 +160,7 @@ export class TsSerializer {
                 this.references[type.name].push(obj);
             }
 
-            for (let property of Object.keys(obj).filter(o => typeof obj[o] !== 'function')) {
+            for (let property of Object.keys(obj).filter(o => typeof obj[o] !== 'function' && typeof obj[o] !== 'undefined')) {
                 transformedObj[property] = this.serializeObject(obj[property]);
             }
             return {

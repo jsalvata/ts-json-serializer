@@ -447,6 +447,19 @@ describe('TsSerializer', () => {
             serializer.serialize(new Model()).should.equal('{"__type":"Model","__value":{}}');
         });
 
+        it('should not serialize an undefined property', () => {
+            @Serializable()
+            class Model {
+                public name: string = 'foobar';
+                public maybe: string | undefined;
+            }
+
+            const mod = new Model();
+            mod.maybe = undefined;
+
+            serializer.serialize(mod).should.equal('{"__type":"Model","__value":{"name":{"__type":"String","__value":"foobar"}}}');
+        });
+
     });
 
     describe('deserialize', () => {

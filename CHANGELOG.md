@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+#### Fixed
+- bug that caused explicitly set undefined properties to crash the serializer
 
 ## [1.2.0]
 #### Added
