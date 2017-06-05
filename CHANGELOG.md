@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.2.3]
+
 ## [1.2.2]
 #### Fixed
 - Bugrelease.
@@ -36,7 +38,8 @@ Library that does serialization and deserialization for JSON communication. It d
 to support browsers as well in the future. The main reason is to use decorators to register the serializable models
 and create a reliable json structure with those informations. Further information is found in the readme.
 
-[Unreleased]: https://github.com/buehler/typescript-hero/compare/v1.2.2...master
+[Unreleased]: https://github.com/buehler/ts-json-serializer/compare/v1.2.3...master
+[1.2.3]: https://github.com/buehler/ts-json-serializer/compare/v1.2.2...v1.2.3
 [1.2.2]: https://github.com/buehler/typescript-hero/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/buehler/ts-json-serializer/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/buehler/ts-json-serializer/compare/v1.1.0...v1.2.0

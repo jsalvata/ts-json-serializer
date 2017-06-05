@@ -1,6 +1,6 @@
 {
   "name": "ts-json-serializer",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Object serialization made easy with decorators.",
   "main": "index.js",
   "typings": "index.d.ts",
