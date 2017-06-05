@@ -24,19 +24,17 @@ console.log(`Update changelog`);
 
 let changelog = fs.readFileSync('./CHANGELOG.md', 'utf-8');
 changelog = changelog.replace(/## \[Unreleased\]/, `## [Unreleased]\n\n## [${versionNumber}]`);
-changelog = changelog.replace(/\[Unreleased\]\:.*v(.*)\.\.\.master/, `[Unreleased]: https://github.com/buehler/typescript-hero/compare/v${versionNumber}...master
-[${versionNumber}]: https://github.com/buehler/typescript-hero/compare/v$1...v${versionNumber}`);
+changelog = changelog.replace(/\[Unreleased\]\:.*v(.*)\.\.\.master/, `[Unreleased]: https://github.com/buehler/ts-json-serializer/compare/v${versionNumber}...master
+[${versionNumber}]: https://github.com/buehler/ts-json-serializer/compare/v$1...v${versionNumber}`);
 
 fs.writeFileSync('./CHANGELOG.md', changelog, { encoding: 'utf-8' });
+
+console.log('Commit *.json');
+
+exec('git add package.json');
+exec(`git commit -m "Version bump to v${versionNumber}"`);
 
 console.log('Commit changelog');
 
 exec('git add CHANGELOG.md');
 exec(`git commit -m "Update changelog to v${versionNumber}"`);
-
-console.log('Update package.json version');
-
-exec(`yarn version --new-version ${versionNumber} --no-git-tag-version`);
-exec('git add package.json');
-exec('git add yarn.lock');
-exec(`git commit -m "Update package.json to v${versionNumber}"`);

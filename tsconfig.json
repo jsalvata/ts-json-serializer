@@ -1,7 +1,6 @@
 {
     "extends": "./tsconfig/base.json",
     "compilerOptions": {
-        "outDir": "../build",
         "declaration": false,
         "sourceMap": true,
         "noUnusedLocals": false,
@@ -10,6 +9,6 @@
     },
     "exclude": [
         "node_modules",
-        "ßbuild"
+        "build"
     ]
 }

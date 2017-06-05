@@ -6,7 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.2.2]
 #### Fixed
-- Undefined objects in array caused error
+- Bugrelease.
 
 ## [1.2.1]
 #### Fixed
