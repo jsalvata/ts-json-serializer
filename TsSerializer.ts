@@ -76,7 +76,7 @@ export class TsSerializer {
         this.references = {};
         let serialized: any;
         if (objectOrArray !== null && objectOrArray.constructor === Array) {
-            serialized = objectOrArray.filter(o => o !== undefined).map(o => this.serializeObject(o));
+            serialized = objectOrArray.map(o => this.serializeObject(o)).filter(o => o !== undefined);
         } else {
             serialized = this.serializeObject(objectOrArray);
         }
@@ -119,8 +119,10 @@ export class TsSerializer {
      * 
      * @memberOf TsSerializer
      */
-    private serializeObject(obj: any): TransportObject {
-        if (obj === null) {
+    private serializeObject(obj: any): TransportObject | undefined {
+        if (obj === undefined || (obj && !obj.constructor)) {
+            return;
+        } else if (obj === null) {
             return {
                 __type: 'null',
                 __value: null
