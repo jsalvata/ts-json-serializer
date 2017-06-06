@@ -125,6 +125,11 @@ export class TsSerializer {
                 __type: 'null',
                 __value: null
             };
+        } else if (obj === undefined || !obj.constructor) {
+            return {
+                __type: 'undefined',
+                __value: undefined
+            };
         } else if (obj.constructor === Date) {
             return {
                 __type: 'Date',
@@ -186,7 +191,12 @@ export class TsSerializer {
      * @memberOf TsSerializer
      */
     private deserializeObject(obj: TransportObject): any {
+        if (!obj) {
+            return;
+        }
         switch (obj.__type) {
+            case 'undefined':
+                return;
             case 'null':
                 return null;
             case 'Date':
