@@ -9,3 +9,7 @@ node_modules
 # typescript stuff
 coverage
 build
+
+# build artefact
+*.d.ts
+*.js

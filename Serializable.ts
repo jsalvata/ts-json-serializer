@@ -8,7 +8,7 @@ import { NoFactoryProvidedError, NoNameProvided } from './errors';
  * @export
  * @interface SerializableOptions
  */
-export interface SerializableOptions {
+export interface SerializableOptions<T> {
     /**
      * The name of the type. When the class mangled or function.name does not work,
      * you should add a name for the resolver.
@@ -22,10 +22,10 @@ export interface SerializableOptions {
      * Factory function of the type. Must be used when the class has no default, parameterless constructor.
      * Does receive the json / plain object version of the object and should instantiate the effective type.
      * 
-     * @type {<T>(json: any) => T}
+     * @type {(json: any) => T}
      * @memberOf SerializableOptions
      */
-    factory?: <T>(json: any) => T;
+    factory?: (json: any) => T;
 };
 
 /**
@@ -36,7 +36,7 @@ export interface SerializableOptions {
  * @param {SerializableOptions} [options] Configuration object for the type, contains an optional name and factory.
  * @returns {ClassDecorator}
  */
-export function Serializable(options?: SerializableOptions): ClassDecorator {
+export function Serializable<T>(options?: SerializableOptions<T>): ClassDecorator {
     return (type: Function) => {
         const name = options && options.name ? options.name : (type as any).name;
         if (type.length > 0 && (!options || !options.factory)) {

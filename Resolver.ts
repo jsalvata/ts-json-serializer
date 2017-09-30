@@ -32,7 +32,7 @@ export class Resolver {
      * @type {{ [name: string]: SerializableType }}
      * @memberOf Resolver
      */
-    private types: { [name: string]: SerializableType } = {};
+    private types: { [name: string]: SerializableType<any> } = {};
 
     private constructor() { }
 
@@ -53,7 +53,7 @@ export class Resolver {
      * 
      * @memberOf Resolver
      */
-    public addType(type: SerializableType): void {
+    public addType(type: SerializableType<any>): void {
         if (this.types[type.name]) {
             throw new DuplicateTypeRegistration(type.name);
         }
@@ -69,7 +69,7 @@ export class Resolver {
      * 
      * @memberOf Resolver
      */
-    public getType(name: string): SerializableType | undefined {
+    public getType(name: string): SerializableType<any> | undefined {
         return this.types[name];
     }
 
@@ -81,7 +81,7 @@ export class Resolver {
      * 
      * @memberOf Resolver
      */
-    public getTypeByObject(obj: any): SerializableType | undefined {
+    public getTypeByObject(obj: any): SerializableType<any> | undefined {
         return Object.keys(this.types)
             .map(key => this.types[key])
             .find(o => obj.constructor === o.ctor);
