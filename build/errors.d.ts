@@ -5,8 +5,7 @@
  * @export
  * @class NoFactoryProvidedError
  */
-export declare class NoFactoryProvidedError {
-    message: string;
+export declare class NoFactoryProvidedError extends Error {
     constructor(typeName: string);
 }
 /**
@@ -15,8 +14,7 @@ export declare class NoFactoryProvidedError {
  * @export
  * @class DuplicateTypeRegistration
  */
-export declare class DuplicateTypeRegistration {
-    message: string;
+export declare class DuplicateTypeRegistration extends Error {
     constructor(typeName: string);
 }
 /**
@@ -26,8 +24,7 @@ export declare class DuplicateTypeRegistration {
  * @export
  * @class NoNameProvided
  */
-export declare class NoNameProvided {
-    message: string;
+export declare class NoNameProvided extends Error {
     constructor();
 }
 /**
@@ -37,8 +34,7 @@ export declare class NoNameProvided {
  * @export
  * @class TypeNotRegisteredError
  */
-export declare class TypeNotRegisteredError {
-    message: string;
+export declare class TypeNotRegisteredError extends Error {
     constructor(obj: any);
 }
 /**
@@ -47,8 +43,7 @@ export declare class TypeNotRegisteredError {
  * @export
  * @class ReferenceObjectNotFoundError
  */
-export declare class ReferenceObjectNotFoundError {
-    message: string;
+export declare class ReferenceObjectNotFoundError extends Error {
     constructor();
 }
 /**
@@ -57,7 +52,6 @@ export declare class ReferenceObjectNotFoundError {
  * @export
  * @class UndefinedInputError
  */
-export declare class UndefinedInputError {
-    message: string;
+export declare class UndefinedInputError extends Error {
     constructor(functionname: string);
 }
