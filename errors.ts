@@ -5,11 +5,9 @@
  * @export
  * @class NoFactoryProvidedError
  */
-export class NoFactoryProvidedError {
-    public message: string;
-
+export class NoFactoryProvidedError extends Error {
     constructor(typeName: string) {
-        this.message = `The constructor of "${typeName}" is not parameterless, please provide a factory function.`;
+        super(`The constructor of "${typeName}" is not parameterless, please provide a factory function.`);
     }
 }
 
@@ -19,11 +17,10 @@ export class NoFactoryProvidedError {
  * @export
  * @class DuplicateTypeRegistration
  */
-export class DuplicateTypeRegistration {
-    public message: string;
+export class DuplicateTypeRegistration extends Error {
 
     constructor(typeName: string) {
-        this.message = `The type "${typeName}" is duplicated.`;
+        super(`The type "${typeName}" is duplicated.`);
     }
 }
 
@@ -34,12 +31,11 @@ export class DuplicateTypeRegistration {
  * @export
  * @class NoNameProvided
  */
-export class NoNameProvided {
-    public message: string;
+export class NoNameProvided extends Error {
 
     constructor() {
-        this.message = `A type has no name provided, either function.name is not possible (ES5? IE?)` +
-            ` or no name parameter was provided.`;
+        super(`A type has no name provided, either function.name is not possible (ES5? IE?)` +
+            ` or no name parameter was provided.`);
     }
 }
 
@@ -50,12 +46,11 @@ export class NoNameProvided {
  * @export
  * @class TypeNotRegisteredError
  */
-export class TypeNotRegisteredError {
-    public message: string;
+export class TypeNotRegisteredError extends Error {
 
     constructor(obj: any) {
-        this.message = `The object "${obj}" is not found in the type registration. Did you forget the @Serializable` +
-            ` decorator?`;
+        super(`The object "${obj}" is not found in the type registration. Did you forget the @Serializable` +
+            ` decorator?`);
     }
 }
 
@@ -65,11 +60,10 @@ export class TypeNotRegisteredError {
  * @export
  * @class ReferenceObjectNotFoundError
  */
-export class ReferenceObjectNotFoundError {
-    public message: string;
+export class ReferenceObjectNotFoundError extends Error {
 
     constructor() {
-        this.message = 'The reference object was not found in the previous deserialized objects';
+        super('The reference object was not found in the previous deserialized objects');
     }
 }
 
@@ -79,11 +73,10 @@ export class ReferenceObjectNotFoundError {
  * @export
  * @class UndefinedInputError
  */
-export class UndefinedInputError {
-    public message: string;
+export class UndefinedInputError extends Error {
 
     constructor(functionname: string) {
-        this.message = `The input of your '${functionname}' call was undefined.
- Undefined can't be serlialized or deserialized.`;
+        super(`The input of your '${functionname}' call was undefined.
+ Undefined can't be serlialized or deserialized.`);
     }
 }
