@@ -2,8 +2,8 @@
   "name": "ts-json-serializer",
   "version": "1.2.4",
   "description": "Object serialization made easy with decorators.",
-  "main": "index.js",
-  "typings": "index.d.ts",
+  "main": "build/index.js",
+  "typings": "build/index.d.ts",
   "scripts": {
     "clean": "del build coverage",
     "pretest": "npm run clean && tsc -p ./tsconfig/test.json",

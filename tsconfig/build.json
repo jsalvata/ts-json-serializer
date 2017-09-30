@@ -1,7 +1,6 @@
 {
     "extends": "./base.json",
     "compilerOptions": {
-        "outDir": "../",
         "declaration": true,
         "sourceMap": false
     },
