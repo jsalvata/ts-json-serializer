@@ -218,6 +218,13 @@ export class TsSerializer {
                 if (!type) {
                     throw new TypeNotRegisteredError(obj);
                 }
+                if (!this.references[type.name]) {
+                    this.references[type.name] = [];
+                }
+                // push placeholder
+                this.references[type.name].push(undefined);
+                // save index
+                const index = this.references[type.name].length - 1;
 
                 for (let property of Object.keys(obj.__value)) {
                     transformedObj[property] = this.deserializeObject(obj.__value[property]);
@@ -226,11 +233,10 @@ export class TsSerializer {
                 const createdObj = type.factory ?
                     type.factory(transformedObj) :
                     Object.assign(new (type as any).ctor(), transformedObj);
+                
+                this.references[type.name][index] = createdObj;
 
-                if (!this.references[type.name]) {
-                    this.references[type.name] = [];
-                }
-                this.references[type.name].push(createdObj);
+                
 
                 return createdObj;
         }

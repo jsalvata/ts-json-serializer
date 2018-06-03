@@ -299,18 +299,20 @@ describe('TsSerializer', () => {
         });
 
         it('should serialize a model in a model with a constructor', () => {
-            @Serializable({
-                factory: data => new Model()
-            })
-            class Model {
-                constructor(public name: string = 'model', public sub: SubModel = new SubModel()) { }
-            }
-
+            // had to declare SubModel before Model with target=ES2015 or else
+            // would get ReferenceError: SubModel is not defined
             @Serializable({
                 factory: data => new Model(data.name)
             })
             class SubModel {
                 constructor(public name: string = 'sub model') { }
+            }
+
+            @Serializable({
+                factory: data => new Model()
+            })
+            class Model {
+                constructor(public name: string = 'model', public sub: SubModel = new SubModel()) { }
             }
 
             serializer.serialize(new Model()).should.equal(
@@ -747,18 +749,20 @@ describe('TsSerializer', () => {
         });
 
         it('should deserialize a model in a model with a constructor', () => {
-            @Serializable({
-                factory: data => new Model()
-            })
-            class Model {
-                constructor(public name: string = 'model', public sub: SubModel = new SubModel()) { }
-            }
-
+            // had to declare SubModel before Model with target=ES2015 or else
+            // would get ReferenceError: SubModel is not defined
             @Serializable({
                 factory: data => new Model(data.name)
             })
             class SubModel {
                 constructor(public name: string = 'sub model') { }
+            }
+
+            @Serializable({
+                factory: data => new Model()
+            })
+            class Model {
+                constructor(public name: string = 'model', public sub: SubModel = new SubModel()) { }
             }
 
             const deserialized = serializer.deserialize<Model>(
@@ -1055,18 +1059,20 @@ describe('TsSerializer', () => {
         });
 
         it('should work with models that have constructors', () => {
-            @Serializable({
-                factory: data => new Model()
-            })
-            class Model {
-                constructor(public name: string = 'model', public sub: SubModel = new SubModel()) { }
-            }
-
+            // had to declare SubModel before Model with target=ES2015 or else
+            // would get ReferenceError: SubModel is not defined
             @Serializable({
                 factory: data => new Model(data.name)
             })
             class SubModel {
                 constructor(public name: string = 'sub model') { }
+            }
+
+            @Serializable({
+                factory: data => new Model()
+            })
+            class Model {
+                constructor(public name: string = 'model', public sub: SubModel = new SubModel()) { }
             }
 
             const json = serializer.serialize(new Model());
@@ -1076,6 +1082,43 @@ describe('TsSerializer', () => {
             deserialized.name.should.equal('model');
             deserialized.sub.should.be.an.instanceof(SubModel);
             deserialized.sub.name.should.equal('sub model');
+        });
+        it('should work with recursive circular references', () => {
+            @Serializable()
+            class Model {
+                public id: number;
+                public description: string;
+                public items?: Model[];
+                public parent?: Model;
+            }
+            let root = new Model(); root.description = 'root'; root.id = -1;
+            let first = new Model(); first.description = 'first'; first.id = 179;
+            let fp = new Model(); fp.id = 78; fp.description = 'unit A';
+            first.parent = fp;
+            let fpitem1 = new Model(); fpitem1.description = 'baseline'; fpitem1.id = 177;
+            fpitem1.parent = fp;
+            let fpitem2 = new Model(); fpitem2.description = 'lower heatflow'; fpitem2.id = 178;
+            fpitem2.parent = fp;
+            let fpitem4 = new Model(); fpitem4.description = 'Up 65 Ma heatflow'; fpitem4.id = 180;
+            fpitem4.parent = fp;
+            fp.items = [];
+            fp.items.push(fpitem1); fp.items.push(fpitem2); fp.items.push(first); fp.items.push(fpitem4);
+            let fpp = new Model(); fpp.description = 'Multiple Scenarios'; fpp.id = 34;
+            fpp.items = [];
+            fpp.items.push(fp);
+            fp.parent = fpp;
+            let second = new Model(); second.description = 'second'; second.id = 77;
+            let sp = new Model(); sp.description = 'second parent'; sp.id = 33; 
+            sp.items = []; sp.items.push(second);
+            second.parent = sp;
+            root.items = [];
+            root.items.push(first);
+            root.items.push(second);
+
+            const json = serializer.serialize(root);
+            const deserialized = serializer.deserialize<Model>(json);
+            deserialized.should.deep.equal(root);
+
         });
 
     });
