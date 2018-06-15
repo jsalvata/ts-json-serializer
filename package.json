@@ -12,7 +12,8 @@
     "predevelop": "npm run clean",
     "develop": "tsc -p .",
     "prebuild": "npm run clean",
-    "build": "tsc -p ./tsconfig/build.json"
+    "build": "tsc -p ./tsconfig/build.json",
+    "prepack": "npm install; tsc -p ./tsconfig/build.json"
   },
   "keywords": [
     "typescript",
@@ -43,10 +44,10 @@
     "remap-istanbul": "^0.9.1",
     "tslint": "^4.4.2",
     "tslint-jsdoc-rules": "^0.1.2",
-    "typescript": "^2.1.6"
+    "typescript": "^2.1.6",
+    "tslib": "^1.5.0"
   },
   "dependencies": {
-    "reflect-metadata": "^0.1.9",
-    "tslib": "^1.5.0"
+    "reflect-metadata": "^0.1.9"
   }
 }
