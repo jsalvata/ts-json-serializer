@@ -76,7 +76,7 @@ export class TsSerializer {
         this.references = {};
         let serialized: any;
         if (objectOrArray !== null && objectOrArray.constructor === Array) {
-            serialized = objectOrArray.filter(o => o !== undefined).map(o => this.serializeObject(o));
+            serialized = objectOrArray.filter((o: any) => o !== undefined).map((o: any) => this.serializeObject(o));
         } else {
             serialized = this.serializeObject(objectOrArray);
         }
@@ -101,7 +101,7 @@ export class TsSerializer {
         const parsed = JSON.parse(json);
         let deserialized: any;
         if (parsed !== null && parsed.constructor === Array) {
-            deserialized = parsed.map(o => this.deserializeObject(o));
+            deserialized = parsed.map((o: any) => this.deserializeObject(o));
         } else {
             deserialized = this.deserializeObject(parsed);
         }
@@ -138,7 +138,7 @@ export class TsSerializer {
         } else if (obj.constructor === Array) {
             return {
                 __type: 'Array',
-                __value: obj.map(o => this.serializeObject(o)).filter(o => o !== undefined)
+                __value: obj.map((o: any) => this.serializeObject(o)).filter((o: any) => o !== undefined)
             };
         } else if (typeof obj === 'object') {
             const type = this.resolver.getTypeByObject(obj),
@@ -208,7 +208,7 @@ export class TsSerializer {
             case 'Boolean':
                 return Boolean(obj.__value);
             case 'Array':
-                return obj.__value.map(o => this.deserializeObject(o));
+                return obj.__value.map((o: any) => this.deserializeObject(o));
             case 'ref':
                 return new ReferencedObject(obj.__value);
             default:
